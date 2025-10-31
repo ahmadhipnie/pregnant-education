@@ -66,11 +66,17 @@
         .accordion-content.active {
             @apply block;
         }
-        sup {
-            @apply text-teal-600 font-semibold;
+        .quiz-option.wrong {
+            @apply bg-red-200 border-red-500 text-red-900;
         }
-        ol {
-            @apply list-decimal list-inside space-y-1;
+        .quiz-option:disabled {
+            @apply opacity-70 cursor-not-allowed;
+        }
+        .screening-checkbox {
+            @apply h-5 w-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer;
+        }
+        .disclaimer-box {
+            @apply p-4 mb-6 border-l-4 border-red-500 bg-red-50 text-red-800;
         }
         @keyframes spin {
             from { transform: rotate(0deg); }
@@ -96,6 +102,8 @@
                 <button class="tab-button" data-tab="penyebab">Penyebab & Faktor Risiko</button>
                 <button class="tab-button" data-tab="penanganan">Penanganan & Pencegahan</button>
                 <button class="tab-button" data-tab="referensi">Referensi</button>
+                <button class="tab-button" data-tab="kuis">Kuis Interaktif</button>
+                <button class="tab-button" data-tab="skrining">Skrining Mandiri</button>
             </div>
         </nav>
 
@@ -303,6 +311,91 @@
                     <strong>Penting:</strong> Materi ini hanya untuk tujuan edukasi dan tidak menggantikan nasihat medis profesional. Selalu konsultasikan dengan dokter atau penyedia layanan kesehatan Anda mengenai diagnosis dan penanganan kondisi Anda.
                 </p>
             </section>
+            
+            <!-- Bagian Baru Kuis -->
+            <section id="kuis" class="content-section">
+                <h2 class="text-2xl font-semibold mb-6 text-teal-700">Kuis Interaktif: Uji Pengetahuan Anda!</h2>
+                
+                <div id="quiz-container" class="space-y-6">
+                    <div id="question-container" class="hidden">
+                        <p id="question-text" class="text-lg font-medium text-neutral-800 mb-4"></p>
+                        <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <!-- Opsi jawaban akan di-generate oleh JS -->
+                        </div>
+                        <button id="next-question-btn" class="hidden mt-6 inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
+                            Pertanyaan Berikutnya
+                        </button>
+                    </div>
+
+                    <div id="quiz-results" class="hidden text-center space-y-4 p-6 bg-amber-50 rounded-lg">
+                        <h3 class="text-xl font-semibold text-neutral-800">Hasil Kuis Selesai!</h3>
+                        <p id="score-text" class="text-2xl font-bold text-teal-700"></p>
+                        <button id="restart-quiz-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
+                            Ulangi Kuis
+                        </button>
+                    </div>
+
+                    <div id="start-quiz-container" class="text-center">
+                        <p class="mb-4 text-neutral-700">Tes pemahaman Anda tentang materi nyeri punggung pada kehamilan.</p>
+                        <button id="start-quiz-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
+                            Mulai Kuis
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!-- Akhir Bagian Baru Kuis -->
+            
+            <!-- Bagian Baru Skrining Mandiri -->
+            <section id="skrining" class="content-section">
+                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Skrining Mandiri Faktor Risiko</h2>
+                
+                <div class="disclaimer-box">
+                    <h3 class="font-bold">PENTING: BUKAN DIAGNOSIS MEDIS</h3>
+                    <p class="text-sm">Kuis ini adalah alat bantu edukasi untuk membantu Anda mengidentifikasi faktor risiko umum. Ini <strong>TIDAK</strong> menggantikan diagnosis, skrining, atau nasihat dari dokter, bidan, atau fisioterapis Anda. Gunakan hasil ini sebagai bahan diskusi dengan profesional kesehatan Anda.</p>
+                </div>
+
+                <div id="screening-container">
+                    <p class="mb-4 text-neutral-700">Jawab "Ya" pada pernyataan di bawah ini yang sesuai dengan kondisi Anda.</p>
+                    
+                    <div id="screening-questions" class="space-y-4">
+                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda pernah mengalami nyeri punggung kronis atau signifikan <strong>sebelum</strong> kehamilan ini?</span>
+                            <input type="checkbox" class="screening-checkbox">
+                        </label>
+                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda mengalami nyeri punggung pada kehamilan <strong>sebelumnya</strong>? (Jika ini bukan kehamilan pertama Anda)</span>
+                            <input type="checkbox" class="screening-checkbox">
+                        </label>
+                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="text-neutral-800 max-w-[80%]">Apakah Indeks Massa Tubuh (IMT / BMI) Anda berada dalam kategori <i>overweight</i> atau <i>obesitas</i> <strong>sebelum</strong> hamil?</span>
+                            <input type="checkbox" class="screening-checkbox">
+                        </label>
+                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="text-neutral-800 max-w-[80%]">Apakah pekerjaan Anda mengharuskan Anda sering membungkuk, mengangkat berat, atau berdiri sangat lama?</span>
+                            <input type="checkbox" class="screening-checkbox">
+                        </label>
+                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda merasa gaya hidup Anda (di luar pekerjaan) cenderung tidak aktif (banyak duduk/sedentari)?</span>
+                            <input type="checkbox" class="screening-checkbox">
+                        </label>
+                    </div>
+
+                    <button id="show-screening-results-btn" class="mt-6 w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
+                        Lihat Hasil Skrining
+                    </button>
+                </div>
+
+                <div id="screening-results" class="hidden text-center space-y-4 p-6 bg-amber-50 rounded-lg">
+                    <h3 class="text-xl font-semibold text-neutral-800">Hasil Ceklis Anda:</h3>
+                    <p id="screening-score-text" class="text-2xl font-bold text-teal-700"></p>
+                    <p id="screening-advice-text" class="text-neutral-700 max-w-2xl mx-auto"></p>
+                    <p class="font-bold text-neutral-800">Langkah Selanjutnya: Diskusikan poin-poin yang Anda centang dengan dokter atau bidan Anda pada kunjungan berikutnya.</p>
+                    <button id="reset-screening-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
+                        Ulangi Ceklis
+                    </button>
+                </div>
+            </section>
+            <!-- Akhir Bagian Baru Skrining Mandiri -->
             
         </main>
 
@@ -523,9 +616,175 @@
                 });
             }
 
+            // Logika Kuis Baru
+            const quizData = [
+                {
+                    question: "Berapa prevalensi nyeri punggung bawah (NPB) pada ibu hamil menurut studi terbaru?",
+                    options: ["10-20%", "25-40%", "50-80%", "90-100%"],
+                    correctAnswer: "50-80%"
+                },
+                {
+                    question: "Hormon apa yang meningkat selama kehamilan yang menyebabkan pelunakan ligamen dan dapat berkontribusi pada nyeri punggung?",
+                    options: ["Estrogen", "Progesteron", "Testosteron", "Relaksin"],
+                    correctAnswer: "Relaksin"
+                },
+                {
+                    question: "Pergeseran pusat gravitasi ke depan saat hamil sering menyebabkan peningkatan lengkungan pada punggung bawah, yang disebut...",
+                    options: ["Kifosis", "Lordosis", "Skoliosis", "Spondilosis"],
+                    correctAnswer: "Lordosis"
+                },
+                {
+                    question: "Obat pereda nyeri lini pertama apa yang umumnya dianggap paling aman untuk digunakan (dalam dosis rendah) selama kehamilan jika diperlukan?",
+                    options: ["Ibuprofen", "Aspirin", "Parasetamol (Asetaminofen)", "Naproxen"],
+                    correctAnswer: "Parasetamol (Asetaminofen)"
+                },
+                {
+                    question: "Jenis latihan apa yang direkomendasikan untuk mengurangi beban pada sendi dan tulang belakang selama hamil?",
+                    options: ["Lari maraton", "Latihan akuatik (di air)", "Angkat berat", "Sprint"],
+                    correctAnswer: "Latihan akuatik (di air)"
+                }
+            ];
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            const questionContainer = document.getElementById('question-container');
+            const questionText = document.getElementById('question-text');
+            const answerOptions = document.getElementById('answer-options');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const quizResults = document.getElementById('quiz-results');
+            const scoreText = document.getElementById('score-text');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            const startQuizContainer = document.getElementById('start-quiz-container');
+
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                score = 0;
+                startQuizContainer.classList.add('hidden');
+                quizResults.classList.add('hidden');
+                questionContainer.classList.remove('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                showQuestion();
+            }
+
+            function showQuestion() {
+                resetState();
+                const question = quizData[currentQuestionIndex];
+                questionText.textContent = question.question;
+                
+                question.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-option');
+                    button.addEventListener('click', () => selectAnswer(option, button));
+                    answerOptions.appendChild(button);
+                });
+            }
+
+            function resetState() {
+                nextQuestionBtn.classList.add('hidden');
+                while (answerOptions.firstChild) {
+                    answerOptions.removeChild(answerOptions.firstChild);
+                }
+            }
+
+            function selectAnswer(selectedOption, buttonElement) {
+                const correct = selectedOption === quizData[currentQuestionIndex].correctAnswer;
+                
+                if (correct) {
+                    score++;
+                    buttonElement.classList.add('correct');
+                } else {
+                    buttonElement.classList.add('wrong');
+                }
+
+                Array.from(answerOptions.children).forEach(button => {
+                    if (button.textContent === quizData[currentQuestionIndex].correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                    button.disabled = true;
+                });
+
+                nextQuestionBtn.classList.remove('hidden');
+            }
+
+            function showNextQuestion() {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }
+
+            function showResults() {
+                questionContainer.classList.add('hidden');
+                quizResults.classList.remove('hidden');
+                scoreText.textContent = `Anda benar ${score} dari ${quizData.length} pertanyaan!`;
+            }
+
+            function restartQuiz() {
+                quizResults.classList.add('hidden');
+                startQuizContainer.classList.remove('hidden');
+            }
+
+            startQuizBtn.addEventListener('click', startQuiz);
+            nextQuestionBtn.addEventListener('click', showNextQuestion);
+            restartQuizBtn.addEventListener('click', restartQuiz);
+            // Akhir Logika Kuis
+
+            // Logika Skrining Mandiri Baru
+            const screeningContainer = document.getElementById('screening-container');
+            const screeningQuestions = document.getElementById('screening-questions');
+            const showScreeningResultsBtn = document.getElementById('show-screening-results-btn');
+            const screeningResults = document.getElementById('screening-results');
+            const screeningScoreText = document.getElementById('screening-score-text');
+            const screeningAdviceText = document.getElementById('screening-advice-text');
+            const resetScreeningBtn = document.getElementById('reset-screening-btn');
+            const screeningCheckboxes = screeningQuestions.querySelectorAll('.screening-checkbox');
+
+            function showScreeningResults() {
+                let score = 0;
+                screeningCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        score++;
+                    }
+                });
+
+                const total = screeningCheckboxes.length;
+                screeningScoreText.textContent = `Anda memiliki ${score} dari ${total} faktor risiko umum.`;
+
+                let advice = "";
+                if (score === 0) {
+                    advice = "Ini adalah awal yang baik! Meskipun Anda tidak memiliki faktor risiko umum ini, tetap penting untuk menjaga postur tubuh yang baik dan tetap aktif secara aman selama kehamilan.";
+                } else if (score <= 2) {
+                    advice = "Anda memiliki beberapa faktor risiko umum. Ini adalah poin-poin yang sangat baik untuk didiskusikan dengan dokter Anda untuk merencanakan strategi pencegahan, seperti latihan yang tepat atau penyesuaian postur.";
+                } else {
+                    advice = "Anda memiliki beberapa faktor yang diketahui dapat berkontribusi pada nyeri punggung. Sangat disarankan untuk berbicara secara proaktif dengan dokter atau fisioterapis Anda. Mereka dapat memberi Anda strategi pencegahan dan penanganan yang disesuaikan untuk Anda.";
+                }
+                screeningAdviceText.textContent = advice;
+                
+                screeningContainer.classList.add('hidden');
+                screeningResults.classList.remove('hidden');
+            }
+
+            function resetScreening() {
+                screeningResults.classList.add('hidden');
+                screeningContainer.classList.remove('hidden');
+                screeningCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            }
+
+            showScreeningResultsBtn.addEventListener('click', showScreeningResults);
+            resetScreeningBtn.addEventListener('click', resetScreening);
+            // Akhir Logika Skrining Mandiri
+
         });
     </script>
 
 </body>
 </html>
+
 
