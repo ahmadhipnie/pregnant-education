@@ -17,388 +17,1012 @@
         6. Info: Referensi. Goal: Inform (Citation). Viz: Daftar HTML standar. Interaction: None. Justification: Praktik akademis standar. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         :root {
-            --bg-primary: #fffbeb;
+            --bg-primary: linear-gradient(135deg, #fef7ed 0%, #fffbeb 50%, #f0fdf4 100%);
             --bg-secondary: #ffffff;
-            --text-primary: #262626;
-            --text-secondary: #525252;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
             --accent-primary: #0d9488;
-            --accent-secondary: #f0abfc;
-            --border-color: #d4d4d4;
+            --accent-secondary: #14b8a6;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+        
         body {
-            background-color: var(--bg-primary);
+            background: var(--bg-primary);
             color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
         }
+        
+        /* Header Enhancement */
+        .hero-header {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.05) 0%, rgba(20, 184, 166, 0.08) 100%);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(13, 148, 136, 0.1);
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        /* Tab Enhancement */
+        .tab-container {
+            background: white;
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        
         .tab-button {
-            @apply py-3 px-5 text-sm md:text-base font-medium text-center text-gray-600 border-b-2 border-transparent hover:text-gray-800 hover:border-gray-300 transition-all duration-200;
+            position: relative;
+            padding: 12px 20px;
+            margin: 0 4px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            overflow: hidden;
         }
+        
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .tab-button:hover {
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
         .tab-button.active {
-            @apply border-b-2 border-teal-600 text-teal-700;
+            color: white;
+            font-weight: 600;
         }
+        
+        .tab-button.active::before {
+            opacity: 1;
+        }
+        
+        .tab-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Content Section Enhancement */
         .content-section {
-            @apply hidden p-4 md:p-6 bg-white rounded-lg shadow-sm;
+            display: none;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            min-height: 400px;
         }
+        
         .content-section.active {
-            @apply block;
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
         }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Chart Container Enhancement */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 450px;
+            margin: 2rem auto;
             height: 300px;
-            max-height: 350px;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
         }
+        
         @media (min-width: 768px) {
             .chart-container {
                 height: 350px;
+                max-width: 500px;
             }
         }
+        
+        /* Card Enhancement */
+        .info-card {
+            background: linear-gradient(135deg, #fefce8 0%, #fffbeb 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #eab308);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Accordion Enhancement */
         .accordion-header {
-            @apply flex justify-between items-center w-full p-4 font-medium text-left text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1.25rem;
+            font-weight: 600;
+            text-align: left;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
         }
+        
+        .accordion-header:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        
         .accordion-content {
-            @apply hidden p-4 pt-2 bg-white;
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            margin-top: -0.5rem;
         }
+        
         .accordion-content.active {
-            @apply block;
+            display: block;
+            animation: slideDown 0.3s ease-out;
         }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 300px;
+            }
+        }
+        
+        /* Button Enhancement */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Quiz Options Enhancement */
+        .quiz-option {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: white;
+            color: var(--text-primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(13, 148, 136, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .quiz-option:hover::before {
+            left: 100%;
+        }
+        
+        .quiz-option.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #10b981;
+            color: #065f46;
+        }
+        
         .quiz-option.wrong {
-            @apply bg-red-200 border-red-500 text-red-900;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+            color: #991b1b;
         }
+        
         .quiz-option:disabled {
-            @apply opacity-70 cursor-not-allowed;
+            opacity: 0.7;
+            cursor: not-allowed;
         }
-        .screening-checkbox {
-            @apply h-5 w-5 text-teal-600 rounded border-gray-300 focus:ring-teal-500 cursor-pointer;
+        
+        /* Loading Enhancement */
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border: 1px solid #0ea5e9;
         }
-        .disclaimer-box {
-            @apply p-4 mb-6 border-l-4 border-red-500 bg-red-50 text-red-800;
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
+        
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .animate-spin {
-            animation: spin 1s linear infinite;
+        
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .hero-header {
+                padding: 2rem 1rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            .tab-button {
+                padding: 10px 16px;
+                font-size: 0.875rem;
+            }
+            
+            .info-card {
+                padding: 1rem;
+            }
+        }
+        
+        /* Additional Utility Classes */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
+    <div class="min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        <header class="text-center space-y-2">
-            <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Memahami Nyeri Punggung pada Kehamilan</h1>
-            <p class="text-lg text-neutral-700">Panduan Edukasi Berbasis Bukti Ilmiah</p>
+        <header class="hero-header">
+            <h1 class="hero-title text-3xl md:text-5xl font-bold">Memahami Nyeri Punggung pada Kehamilan</h1>
+            <p class="text-lg md:text-xl text-neutral-700 text-center font-medium">Panduan Edukasi Berbasis Bukti Ilmiah</p>
+            <div class="mt-6 flex justify-center">
+                <div class="inline-flex items-center px-4 py-2 bg-teal-50 border border-teal-200 rounded-full">
+                    <svg class="w-5 h-5 text-teal-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-sm font-medium text-teal-800">Informasi Terpercaya & Mudah Dipahami</span>
+                </div>
+            </div>
         </header>
 
-        <nav class="border-b border-gray-300">
-            <div id="tab-nav" class="flex flex-wrap -mb-px justify-center">
-                <button class="tab-button active" data-tab="ringkasan">Ringkasan & Prevalensi</button>
-                <button class="tab-button" data-tab="penyebab">Penyebab & Faktor Risiko</button>
-                <button class="tab-button" data-tab="penanganan">Penanganan & Pencegahan</button>
-                <button class="tab-button" data-tab="referensi">Referensi</button>
-                <button class="tab-button" data-tab="kuis">Kuis Interaktif</button>
-                <button class="tab-button" data-tab="skrining">Skrining Mandiri</button>
+        <nav class="tab-container">
+            <div id="tab-nav" class="flex flex-wrap justify-center">
+                <button class="tab-button active" data-tab="ringkasan"><span>📊 Ringkasan & Prevalensi</span></button>
+                <button class="tab-button" data-tab="penyebab"><span>🔍 Penyebab & Faktor Risiko</span></button>
+                <button class="tab-button" data-tab="penanganan"><span>💡 Penanganan & Pencegahan</span></button>
+                <button class="tab-button" data-tab="referensi"><span>📚 Referensi</span></button>
+                <button class="tab-button" data-tab="kuis"><span>🎯 Kuis Interaktif</span></button>
             </div>
         </nav>
 
-        <main id="content-sections" class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <main id="content-sections" class="space-y-0">
             
             <section id="ringkasan" class="content-section active">
-                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Masalah Umum yang Dapat Dikelola</h2>
-                <p class="text-neutral-700 mb-6">
-                    Nyeri punggung, terutama nyeri punggung bawah (NPB) atau <i>low back pain</i> (LBP), adalah keluhan muskuloskeletal yang sangat umum selama kehamilan. Meskipun sering dianggap sebagai bagian "normal" dari kehamilan, nyeri ini dapat secara signifikan memengaruhi kualitas hidup, tidur, dan aktivitas sehari-hari.<sup>1</sup> Kabar baiknya adalah, dengan pemahaman yang tepat tentang penyebab dan strategi manajemen yang efektif, nyeri ini dapat dikurangi dan dikelola. Halaman ini menyajikan ringkasan temuan berbasis jurnal terbaru mengenai prevalensi, penyebab, dan pilihan penanganan yang aman bagi ibu hamil.
-                </p>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-gradient">Masalah Umum yang Dapat Dikelola</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200 mb-8">
+                    <p class="text-neutral-700 text-lg leading-relaxed">
+                        Nyeri punggung, terutama nyeri punggung bawah (NPB) atau <i>low back pain</i> (LBP), adalah keluhan muskuloskeletal yang sangat umum selama kehamilan. Meskipun sering dianggap sebagai bagian "normal" dari kehamilan, nyeri ini dapat secara signifikan memengaruhi kualitas hidup, tidur, dan aktivitas sehari-hari.<sup>1</sup> Kabar baiknya adalah, dengan pemahaman yang tepat tentang penyebab dan strategi manajemen yang efektif, nyeri ini dapat dikurangi dan dikelola.
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-center text-neutral-800">Seberapa Umum Nyeri Punggung Kehamilan?</h3>
-                        <p class="text-neutral-600 text-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                        <div class="text-center mb-6">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-teal-100 rounded-full mb-4">
+                                <svg class="w-8 h-8 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-neutral-800">Seberapa Umum Nyeri Punggung Kehamilan?</h3>
+                        </div>
+                        <p class="text-neutral-600 text-center mb-6 leading-relaxed">
                             Studi meta-analisis terbaru menunjukkan bahwa prevalensi NPB terkait kehamilan (<i>pregnancy-related low back pain</i>) sangat tinggi, berkisar antara 50% hingga 80% dari seluruh ibu hamil.<sup>1,2</sup>
                         </p>
                         <div class="chart-container">
                             <canvas id="prevalenceChart"></canvas>
                         </div>
-                        <p class="text-xs text-center text-gray-500">Estimasi prevalensi NPB pada ibu hamil.<sup>1</sup></p>
+                        <p class="text-xs text-center text-gray-500 mt-4 italic">Estimasi prevalensi NPB pada ibu hamil.<sup>1</sup></p>
                     </div>
                     
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-center text-neutral-800">Kapan Nyeri Biasanya Muncul?</h3>
-                        <p class="text-neutral-600 text-center">
+                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                        <div class="text-center mb-6">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
+                                <svg class="w-8 h-8 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-neutral-800">Kapan Nyeri Biasanya Muncul?</h3>
+                        </div>
+                        <p class="text-neutral-600 text-center mb-6 leading-relaxed">
                             Meskipun dapat terjadi kapan saja, intensitas dan frekuensi nyeri punggung cenderung meningkat seiring bertambahnya usia kehamilan, dengan puncak insiden sering dilaporkan pada trimester kedua dan ketiga.<sup>3</sup>
                         </p>
                         <div class="chart-container">
                             <canvas id="trimesterChart"></canvas>
                         </div>
-                        <p class="text-xs text-center text-gray-500">Persentase laporan pertama kali timbulnya nyeri berdasarkan trimester.<sup>3</sup></p>
+                        <p class="text-xs text-center text-gray-500 mt-4 italic">Persentase laporan pertama kali timbulnya nyeri berdasarkan trimester.<sup>3</sup></p>
                     </div>
                 </div>
             </section>
 
             <section id="penyebab" class="content-section">
-                <h2 class="text-2xl font-semibold mb-6 text-teal-700">Mengapa Punggung Saya Nyeri?</h2>
-                <p class="mb-6 text-neutral-700">Nyeri punggung selama kehamilan bersifat multifaktorial, artinya disebabkan oleh kombinasi berbagai perubahan yang dialami tubuh Anda. Penyebab utamanya dapat dibagi menjadi dua kategori besar:</p>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-gradient">Mengapa Punggung Saya Nyeri?</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200 mb-8">
+                    <p class="text-neutral-700 text-lg leading-relaxed">
+                        Nyeri punggung selama kehamilan bersifat multifaktorial, artinya disebabkan oleh kombinasi berbagai perubahan yang dialami tubuh Anda. Penyebab utamanya dapat dibagi menjadi dua kategori besar:
+                    </p>
+                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div class="p-4 border border-gray-200 rounded-lg bg-amber-50">
-                        <h3 class="text-xl font-semibold mb-3 text-neutral-800">1. Perubahan Biomekanik</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                    <div class="info-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-neutral-800">1. Perubahan Biomekanik</h3>
+                        </div>
                         
-                        <p class="text-neutral-700 space-y-3">
-                            <span>Perubahan fisik yang paling nyata berkontribusi langsung terhadap nyeri punggung:</span>
-                            <ul class="list-disc list-inside space-y-2 pl-2">
-                                <li><strong>Pergeseran Pusat Gravitasi:</strong> Rahim yang membesar menggeser pusat gravitasi tubuh ke depan. Untuk mengimbanginya, Anda mungkin secara tidak sadar mengubah postur, yang meningkatkan lengkungan punggung bawah (lordosis lumbal).<sup>2</sup></li>
-                                <li><strong>Peningkatan Berat Badan:</strong> Berat badan tambahan dari bayi, plasenta, dan cairan ketuban memberikan beban ekstra pada tulang belakang dan sendi panggul.</li>
-                                <li><strong>Peregangan Otot:</strong> Otot-otot perut (rektus abdominis) meregang untuk mengakomodasi rahim, mengurangi kemampuannya untuk menstabilkan batang tubuh dan panggul.</li>
-                            </ul>
+                        <p class="text-neutral-700 mb-4 leading-relaxed">
+                            Perubahan fisik yang paling nyata berkontribusi langsung terhadap nyeri punggung:
                         </p>
+                        <ul class="space-y-3 text-neutral-700">
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <div>
+                                    <strong>Pergeseran Pusat Gravitasi:</strong> Rahim yang membesar menggeser pusat gravitasi tubuh ke depan. Untuk mengimbanginya, Anda mungkin secara tidak sadar mengubah postur, yang meningkatkan lengkungan punggung bawah (lordosis lumbal).<sup>2</sup>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <div>
+                                    <strong>Peningkatan Berat Badan:</strong> Berat badan tambahan dari bayi, plasenta, dan cairan ketuban memberikan beban ekstra pada tulang belakang dan sendi panggul.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <div>
+                                    <strong>Peregangan Otot:</strong> Otot-otot perut (rektus abdominis) meregang untuk mengakomodasi rahim, mengurangi kemampuannya untuk menstabilkan batang tubuh dan panggul.
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="p-4 border border-gray-200 rounded-lg bg-amber-50">
-                        <h3 class="text-xl font-semibold mb-3 text-neutral-800">2. Perubahan Hormonal</h3>
-                        <p class="text-neutral-700 space-y-3">
-                            <span>Hormon kehamilan memainkan peran penting dalam mempersiapkan tubuh untuk persalinan, namun memiliki efek samping:</span>
-                            <ul class="list-disc list-inside space-y-2 pl-2">
-                                <li><strong>Hormon Relaksin:</strong> Hormon ini meningkat selama kehamilan untuk melunakkan ligamen di panggul agar jalan lahir lebih fleksibel.<sup>1</sup></li>
-                                <li><strong>Efek Samping:</strong> Relaksin tidak hanya bekerja di panggul; ia juga melunakkan ligamen lain, termasuk yang menopang tulang belakang. Hal ini dapat menyebabkan berkurangnya stabilitas sendi (termasuk sendi sakroiliaka) dan meningkatkan risiko nyeri.<sup>3</sup></li>
-                            </ul>
+                    
+                    <div class="info-card">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-neutral-800">2. Perubahan Hormonal</h3>
+                        </div>
+                        
+                        <p class="text-neutral-700 mb-4 leading-relaxed">
+                            Hormon kehamilan memainkan peran penting dalam mempersiapkan tubuh untuk persalinan, namun memiliki efek samping:
                         </p>
+                        <ul class="space-y-3 text-neutral-700">
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <div>
+                                    <strong>Hormon Relaksin:</strong> Hormon ini meningkat selama kehamilan untuk melunakkan ligamen di panggul agar jalan lahir lebih fleksibel.<sup>1</sup>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                                <div>
+                                    <strong>Efek Samping:</strong> Relaksin tidak hanya bekerja di panggul; ia juga melunakkan ligamen lain, termasuk yang menopang tulang belakang. Hal ini dapat menyebabkan berkurangnya stabilitas sendi (termasuk sendi sakroiliaka) dan meningkatkan risiko nyeri.<sup>3</sup>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Faktor Risiko</h2>
-                <p class="text-neutral-700 mb-4">Beberapa faktor telah diidentifikasi dalam penelitian yang dapat meningkatkan kemungkinan seorang wanita mengalami nyeri punggung selama kehamilan. Memahami faktor-faktor ini penting untuk pencegahan dini.<sup>1,3</sup></p>
-                
-                <ul class="list-disc list-inside space-y-2 text-neutral-700 p-4 bg-gray-50 rounded-md">
-                    <li><strong>Riwayat Nyeri Punggung:</strong> Faktor risiko terkuat adalah memiliki riwayat NPB sebelum kehamilan atau pada kehamilan sebelumnya.</li>
-                    <li><strong>Indeks Massa Tubuh (IMT):</strong> IMT yang lebih tinggi (obesitas) sebelum atau selama kehamilan meningkatkan beban mekanis pada tulang belakang.</li>
-                    <li><strong>Multiparitas:</strong> Wanita yang telah melahirkan beberapa kali (multipara) mungkin memiliki risiko lebih tinggi.</li>
-                    <li><strong>Aktivitas Fisik:</strong> Pekerjaan yang menuntut fisik (sering membungkuk, mengangkat berat) atau gaya hidup yang sangat tidak aktif (sedentari) keduanya dapat berkontribusi.</li>
-                </ul>
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-gradient mb-4">Faktor Risiko</h2>
+                        <div class="w-16 h-1 bg-gradient-to-r from-red-400 to-red-600 mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <p class="text-neutral-700 mb-6 text-center leading-relaxed">
+                        Beberapa faktor telah diidentifikasi dalam penelitian yang dapat meningkatkan kemungkinan seorang wanita mengalami nyeri punggung selama kehamilan. Memahami faktor-faktor ini penting untuk pencegahan dini.<sup>1,3</sup>
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-red-50 rounded-lg border border-red-200">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                    <span class="text-red-600 font-bold text-sm">1</span>
+                                </div>
+                                <div>
+                                    <strong class="text-red-800">Riwayat Nyeri Punggung:</strong>
+                                    <p class="text-red-700 text-sm mt-1">Faktor risiko terkuat adalah memiliki riwayat NPB sebelum kehamilan atau pada kehamilan sebelumnya.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start p-4 bg-orange-50 rounded-lg border border-orange-200">
+                                <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                    <span class="text-orange-600 font-bold text-sm">2</span>
+                                </div>
+                                <div>
+                                    <strong class="text-orange-800">Indeks Massa Tubuh (IMT):</strong>
+                                    <p class="text-orange-700 text-sm mt-1">IMT yang lebih tinggi (obesitas) sebelum atau selama kehamilan meningkatkan beban mekanis pada tulang belakang.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                    <span class="text-yellow-600 font-bold text-sm">3</span>
+                                </div>
+                                <div>
+                                    <strong class="text-yellow-800">Multiparitas:</strong>
+                                    <p class="text-yellow-700 text-sm mt-1">Wanita yang telah melahirkan beberapa kali (multipara) mungkin memiliki risiko lebih tinggi.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start p-4 bg-green-50 rounded-lg border border-green-200">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                    <span class="text-green-600 font-bold text-sm">4</span>
+                                </div>
+                                <div>
+                                    <strong class="text-green-800">Aktivitas Fisik:</strong>
+                                    <p class="text-green-700 text-sm mt-1">Pekerjaan yang menuntut fisik (sering membungkuk, mengangkat berat) atau gaya hidup yang sangat tidak aktif (sedentari) keduanya dapat berkontribusi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section id="penanganan" class="content-section">
-                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Manajemen Nyeri Punggung yang Aman</h2>
-                <p class="text-neutral-700 mb-6">Tujuan utama penanganan adalah mengurangi nyeri, meningkatkan fungsi, dan mencegah nyeri kronis pasca-persalinan. Pendekatan non-farmakologis (tanpa obat) adalah lini pertama dan paling direkomendasikan.<sup>5</sup></p>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-gradient">Manajemen Nyeri Punggung yang Aman</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200 mb-8">
+                    <p class="text-neutral-700 text-lg leading-relaxed">
+                        Tujuan utama penanganan adalah mengurangi nyeri, meningkatkan fungsi, dan mencegah nyeri kronis pasca-persalinan. Pendekatan non-farmakologis (tanpa obat) adalah lini pertama dan paling direkomendasikan.<sup>5</sup>
+                    </p>
+                </div>
 
-                <div id="accordion-container" class="space-y-3">
+                <div id="accordion-container" class="space-y-4 mb-10">
                     
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            <span>1. Edukasi dan Perawatan Diri (Lini Pertama)</span>
-                            <span class="accordion-icon text-xl font-bold">+</span>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-blue-600 font-bold">1</span>
+                                </div>
+                                <span class="font-semibold">Edukasi dan Perawatan Diri (Lini Pertama)</span>
+                            </div>
+                            <span class="accordion-icon text-2xl font-bold text-teal-600 transition-transform">+</span>
                         </button>
                         <div class="accordion-content">
-                            <p class="mb-3">Ini adalah fondasi manajemen NPB. Memahami apa yang harus dilakukan dan dihindari sangat penting.<sup>3,5</sup></p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li><strong>Edukasi Postur:</strong> Belajar cara duduk, berdiri, dan tidur yang benar. Gunakan bantal penyangga saat duduk atau tidur miring (dengan bantal di antara lutut).</li>
-                                <li><strong>Mekanika Tubuh:</strong> Hindari mengangkat benda berat. Jika harus, tekuk lutut (jongkok) dan jaga punggung tetap lurus, bukan membungkuk dari pinggang.</li>
-                                <li><strong>Alas Kaki:</strong> Hindari sepatu hak tinggi. Gunakan sepatu yang nyaman dengan penyangga lengkungan kaki yang baik.</li>
-                                <li><strong>Pencegahan:</strong> Program "Back School" selama kehamilan terbukti efektif mengurangi intensitas nyeri.<sup>2</sup></li>
-                            </ul>
+                            <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                                <p class="mb-4 text-blue-800 font-medium">Ini adalah fondasi manajemen NPB. Memahami apa yang harus dilakukan dan dihindari sangat penting.<sup>3,5</sup></p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-blue-300">
+                                        <h4 class="font-bold text-blue-800 mb-2">✨ Edukasi Postur</h4>
+                                        <p class="text-blue-700 text-sm">Belajar cara duduk, berdiri, dan tidur yang benar. Gunakan bantal penyangga saat duduk atau tidur miring (dengan bantal di antara lutut).</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-blue-300">
+                                        <h4 class="font-bold text-blue-800 mb-2">🏋️ Mekanika Tubuh</h4>
+                                        <p class="text-blue-700 text-sm">Hindari mengangkat benda berat. Jika harus, tekuk lutut (jongkok) dan jaga punggung tetap lurus, bukan membungkuk dari pinggang.</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-blue-300">
+                                        <h4 class="font-bold text-blue-800 mb-2">👟 Alas Kaki</h4>
+                                        <p class="text-blue-700 text-sm">Hindari sepatu hak tinggi. Gunakan sepatu yang nyaman dengan penyangga lengkungan kaki yang baik.</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-blue-300">
+                                        <h4 class="font-bold text-blue-800 mb-2">🎯 Pencegahan</h4>
+                                        <p class="text-blue-700 text-sm">Program "Back School" selama kehamilan terbukti efektif mengurangi intensitas nyeri.<sup>2</sup></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            <span>2. Latihan dan Fisioterapi</span>
-                            <span class="accordion-icon text-xl font-bold">+</span>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-green-600 font-bold">2</span>
+                                </div>
+                                <span class="font-semibold">Latihan dan Fisioterapi</span>
+                            </div>
+                            <span class="accordion-icon text-2xl font-bold text-teal-600 transition-transform">+</span>
                         </button>
                         <div class="accordion-content">
-                            <p class="mb-3">Aktivitas fisik yang dimodifikasi dan ditargetkan sangat efektif dan aman. Tinjauan sistematis menunjukkan bahwa olahraga dapat mengurangi risiko NPB dan intensitas nyeri secara signifikan.<sup>2,4</sup></p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li><strong>Latihan Spesifik:</strong> Fisioterapis dapat merancang program latihan untuk memperkuat otot inti (termasuk dasar panggul dan transversus abdominis) dan otot punggung.</li>
-                                <li><strong>Yoga & Pilates Prenatal:</strong> Aktivitas ini fokus pada fleksibilitas, kekuatan inti, dan postur.</li>
-                                <li><strong>Latihan Akuatik:</strong> Berolahraga di dalam air (misalnya berenang atau aerobik air) mengurangi beban pada sendi dan tulang belakang, memberikan kelegaan sekaligus latihan.<sup>2</sup></li>
-                            </ul>
+                            <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                                <p class="mb-4 text-green-800 font-medium">Aktivitas fisik yang dimodifikasi dan ditargetkan sangat efektif dan aman. Tinjauan sistematis menunjukkan bahwa olahraga dapat mengurangi risiko NPB dan intensitas nyeri secara signifikan.<sup>2,4</sup></p>
+                                <div class="space-y-4">
+                                    <div class="flex items-start bg-white p-4 rounded-lg border border-green-300">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <span class="text-green-600 text-lg">💪</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-green-800">Latihan Spesifik</h4>
+                                            <p class="text-green-700 text-sm">Fisioterapis dapat merancang program latihan untuk memperkuat otot inti (termasuk dasar panggul dan transversus abdominis) dan otot punggung.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg border border-green-300">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <span class="text-green-600 text-lg">🧘</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-green-800">Yoga & Pilates Prenatal</h4>
+                                            <p class="text-green-700 text-sm">Aktivitas ini fokus pada fleksibilitas, kekuatan inti, dan postur.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start bg-white p-4 rounded-lg border border-green-300">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                            <span class="text-green-600 text-lg">🏊</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-green-800">Latihan Akuatik</h4>
+                                            <p class="text-green-700 text-sm">Berolahraga di dalam air (misalnya berenang atau aerobik air) mengurangi beban pada sendi dan tulang belakang, memberikan kelegaan sekaligus latihan.<sup>2</sup></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            <span>3. Terapi Manual dan Pendukung</span>
-                            <span class="accordion-icon text-xl font-bold">+</span>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-purple-600 font-bold">3</span>
+                                </div>
+                                <span class="font-semibold">Terapi Manual dan Pendukung</span>
+                            </div>
+                            <span class="accordion-icon text-2xl font-bold text-teal-600 transition-transform">+</span>
                         </button>
                         <div class="accordion-content">
-                            <p class="mb-3">Intervensi fisik tambahan dapat memberikan kelegaan yang signifikan.</p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li><strong>Terapi Manual:</strong> Dilakukan oleh profesional terlatih (fisioterapis, kiropraktor) dapat membantu memobilisasi sendi yang kaku.</li>
-                                <li><strong>Kinesio Taping:</strong> Sebuah meta-analisis baru-baru ini (2024) menemukan bahwa Kinesio Taping efektif dalam mengurangi nyeri dan meningkatkan fungsionalitas pada NPB terkait kehamilan.<sup>4</sup></li>
-                                <li><strong>Sabuk Penyangga Panggul (Maternity Belts):</strong> Dapat memberikan stabilitas eksternal, terutama untuk nyeri sendi sakroiliaka, meskipun bukti ilmiahnya masih bervariasi.<sup>1</sup></li>
-                                <li><strong>Akupunktur:</strong> Beberapa penelitian menunjukkan akupunktur lebih unggul daripada fisioterapi standar dalam mengurangi nyeri.<sup>1</sup></li>
-                            </ul>
+                            <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                                <p class="mb-4 text-purple-800 font-medium">Intervensi fisik tambahan dapat memberikan kelegaan yang signifikan.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-purple-300">
+                                        <h4 class="font-bold text-purple-800 mb-2">👐 Terapi Manual</h4>
+                                        <p class="text-purple-700 text-sm">Dilakukan oleh profesional terlatih (fisioterapis, kiropraktor) dapat membantu memobilisasi sendi yang kaku.</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-purple-300">
+                                        <h4 class="font-bold text-purple-800 mb-2">🔗 Kinesio Taping</h4>
+                                        <p class="text-purple-700 text-sm">Sebuah meta-analisis baru-baru ini (2024) menemukan bahwa Kinesio Taping efektif dalam mengurangi nyeri dan meningkatkan fungsionalitas pada NPB terkait kehamilan.<sup>4</sup></p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-purple-300">
+                                        <h4 class="font-bold text-purple-800 mb-2">🎀 Sabuk Penyangga</h4>
+                                        <p class="text-purple-700 text-sm">Dapat memberikan stabilitas eksternal, terutama untuk nyeri sendi sakroiliaka, meskipun bukti ilmiahnya masih bervariasi.<sup>1</sup></p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-purple-300">
+                                        <h4 class="font-bold text-purple-800 mb-2">📍 Akupunktur</h4>
+                                        <p class="text-purple-700 text-sm">Beberapa penelitian menunjukkan akupunktur lebih unggul daripada fisioterapi standar dalam mengurangi nyeri.<sup>1</sup></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            <span>4. Penanganan Farmakologis (Obat-obatan)</span>
-                            <span class="accordion-icon text-xl font-bold">+</span>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-red-600 font-bold">4</span>
+                                </div>
+                                <span class="font-semibold">Penanganan Farmakologis (Obat-obatan)</span>
+                            </div>
+                            <span class="accordion-icon text-2xl font-bold text-teal-600 transition-transform">+</span>
                         </button>
                         <div class="accordion-content">
-                            <p class="mb-3 text-red-700 font-semibold">Selalu konsultasikan dengan dokter atau bidan Anda sebelum mengonsumsi obat apa pun selama kehamilan.</p>
-                            <ul class="list-disc list-inside space-y-2">
-                                <li><strong>Parasetamol (Asetaminofen):</strong> Dianggap sebagai obat pereda nyeri lini pertama yang dapat digunakan selama kehamilan jika diperlukan, namun harus dalam dosis efektif terendah dan untuk durasi sesingkat mungkin.<sup>5</sup></li>
-                                <li><strong>NSAID (Obat Antiinflamasi Nonsteroid):</strong> Seperti Ibuprofen, umumnya harus dihindari, terutama pada trimester ketiga karena risiko pada janin (penutupan dini duktus arteriosus).<sup>5</sup></li>
-                                <li><strong>Obat Lain:</strong> Opioid dan relaksan otot sangat tidak dianjurkan kecuali dalam kasus yang sangat spesifik dan di bawah pengawasan medis ketat.<sup>1,5</sup></li>
-                            </ul>
+                            <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+                                <div class="bg-red-100 p-4 rounded-lg border border-red-300 mb-4">
+                                    <p class="text-red-800 font-bold text-center">⚠️ Selalu konsultasikan dengan dokter atau bidan Anda sebelum mengonsumsi obat apa pun selama kehamilan.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="bg-white p-4 rounded-lg border border-red-300">
+                                        <div class="flex items-center mb-2">
+                                            <span class="text-green-600 text-xl mr-2">✅</span>
+                                            <h4 class="font-bold text-red-800">Parasetamol (Asetaminofen)</h4>
+                                        </div>
+                                        <p class="text-red-700 text-sm">Dianggap sebagai obat pereda nyeri lini pertama yang dapat digunakan selama kehamilan jika diperlukan, namun harus dalam dosis efektif terendah dan untuk durasi sesingkat mungkin.<sup>5</sup></p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-red-300">
+                                        <div class="flex items-center mb-2">
+                                            <span class="text-red-600 text-xl mr-2">❌</span>
+                                            <h4 class="font-bold text-red-800">NSAID (Obat Antiinflamasi Nonsteroid)</h4>
+                                        </div>
+                                        <p class="text-red-700 text-sm">Seperti Ibuprofen, umumnya harus dihindari, terutama pada trimester ketiga karena risiko pada janin (penutupan dini duktus arteriosus).<sup>5</sup></p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg border border-red-300">
+                                        <div class="flex items-center mb-2">
+                                            <span class="text-red-600 text-xl mr-2">⚠️</span>
+                                            <h4 class="font-bold text-red-800">Obat Lain</h4>
+                                        </div>
+                                        <p class="text-red-700 text-sm">Opioid dan relaksan otot sangat tidak dianjurkan kecuali dalam kasus yang sangat spesifik dan di bawah pengawasan medis ketat.<sup>1,5</sup></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Bagian Baru Gemini API -->
-                <div class="mt-8 pt-6 border-t border-gray-200">
-                    <h3 class="text-xl font-semibold mb-4 text-teal-700">✨ Kiat Perawatan Diri yang Dipersonalisasi (AI)</h3>
-                    <p class="text-sm text-red-600 mb-4 p-3 bg-red-50 rounded-lg">
-                        <strong>Peringatan:</strong> Fitur ini ditenagai oleh AI generatif. Kiat yang diberikan adalah untuk tujuan informasi saja dan <strong>bukan</strong> pengganti nasihat medis profesional. Selalu konsultasikan dengan dokter atau fisioterapis Anda.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
-                            <label for="ai-trimester" class="block text-sm font-medium text-gray-700">Trimester Anda:</label>
-                            <select id="ai-trimester" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500">
+                <div class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl p-8 border border-indigo-200 shadow-lg">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-gradient mb-2">✨ Kiat Perawatan Diri yang Dipersonalisasi (AI)</h3>
+                        <div class="w-16 h-1 bg-gradient-to-r from-indigo-400 to-purple-600 mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200 mb-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                                <span class="text-red-600 text-lg">⚠️</span>
+                            </div>
+                            <div>
+                                <p class="text-red-800 font-medium">Peringatan Penting</p>
+                                <p class="text-red-700 text-sm">Fitur ini ditenagai oleh AI generatif. Kiat yang diberikan adalah untuk tujuan informasi saja dan <strong>bukan</strong> pengganti nasihat medis profesional. Selalu konsultasikan dengan dokter atau fisioterapis Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg border border-indigo-200">
+                            <label for="ai-trimester" class="block text-sm font-semibold text-indigo-800 mb-2">🤰 Trimester Anda</label>
+                            <select id="ai-trimester" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-colors">
                                 <option value="pertama">Trimester Pertama</option>
                                 <option value="kedua" selected>Trimester Kedua</option>
                                 <option value="ketiga">Trimester Ketiga</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="ai-activity" class="block text-sm font-medium text-gray-700">Aktivitas Harian:</label>
-                            <select id="ai-activity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500">
+                        <div class="bg-white p-4 rounded-lg border border-purple-200">
+                            <label for="ai-activity" class="block text-sm font-semibold text-purple-800 mb-2">🏃‍♀️ Aktivitas Harian</label>
+                            <select id="ai-activity" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 transition-colors">
                                 <option value="rendah">Rendah (banyak duduk)</option>
                                 <option value="sedang" selected>Sedang (cukup aktif)</option>
                                 <option value="tinggi">Tinggi (sangat aktif)</option>
                             </select>
                         </div>
-                        <div>
-                            <label for="ai-focus" class="block text-sm font-medium text-gray-700">Fokus Nyeri:</label>
-                            <select id="ai-focus" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500">
+                        <div class="bg-white p-4 rounded-lg border border-pink-200">
+                            <label for="ai-focus" class="block text-sm font-semibold text-pink-800 mb-2">🎯 Fokus Nyeri</label>
+                            <select id="ai-focus" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 transition-colors">
                                 <option value="punggung bawah" selected>Punggung Bawah</option>
                                 <option value="punggung atas">Punggung Atas/Bahu</option>
                                 <option value="panggul">Panggul/Sakroiliaka</option>
                             </select>
                         </div>
                     </div>
-                    <button id="generateTipsButton" class="w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                        ✨ Hasilkan Kiat Saya
-                    </button>
                     
-                    <div id="loadingIndicator" class="hidden mt-4 flex items-center space-x-2 text-gray-600">
-                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-teal-600"></div>
-                        <span>Menghasilkan kiat...</span>
+                    <div class="text-center mb-6">
+                        <button id="generateTipsButton" class="btn-primary inline-flex items-center px-8 py-4 text-lg font-semibold">
+                            <span class="mr-2">✨</span>
+                            <span>Hasilkan Kiat Saya</span>
+                        </button>
+                    </div>
+                    
+                    <div id="loadingIndicator" class="hidden">
+                        <div class="loading-container">
+                            <div class="spinner"></div>
+                            <span class="text-teal-700 font-medium">Menghasilkan kiat personalisasi...</span>
+                        </div>
                     </div>
 
-                    <div id="tipsResult" class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-200 hidden">
+                    <div id="tipsResult" class="hidden bg-white rounded-xl p-6 border border-indigo-300 shadow-inner">
                     </div>
                 </div>
                 <!-- Akhir Bagian Baru Gemini API -->
             </section>
             
             <section id="referensi" class="content-section">
-                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Daftar Pustaka (Gaya AMA)</h2>
-                <p class="text-neutral-700 mb-6">Informasi yang disajikan di sini didasarkan pada tinjauan sistematis, meta-analisis, dan pedoman praktik klinis terbaru.</p>
-                <ol class="space-y-3 text-sm text-neutral-800">
-                    <li>Kovacs FM, Garcia-Odalric J, Gesteira C, et al. Management of low back pain in pregnancy: a systematic review and meta-analysis. <i>J Clin Med</i>. 2023;12(4):1345. doi:10.3390/jcm12041345</li>
-                    <li>Shiri R, Coggon D, Falah-Hassani K. Exercise for the prevention and treatment of low back pain in pregnancy: a systematic review and meta-analysis. <i>Eur J Pain</i>. 2024;28(1):19-32. doi:10.1002/ejp.2163</li>
-                    <li>Casagrande D, Gugala Z, Clark SM, Lindsey RW. Low back pain and pelvic girdle pain in pregnancy. <i>J Am Acad Orthop Surg</i>. 2023;31(18):921-931. doi:10.5435/JAAOS-D-22-00894</li>
-                    <li>Li W, Chen Y, Wang H. Efficacy of Kinesio taping for pregnancy-related low back pain: A systematic review and meta-analysis. <i>Int J Nurs Stud</i>. 2024;149:104631. doi:10.1016/j.ijnurstu.2023.104631</li>
-                    <li>American College of Obstetricians and Gynecologists. Management of common musculoskeletal complaints during pregnancy. <i>ACOG Clinical Practice Guideline No. 4.</i> 2023;141(5):e481-e490. doi:10.1097/AOG.0000000000005171</li>
-                </ol>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-gradient">Daftar Pustaka</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
+                </div>
                 
-                <p class="mt-8 text-xs text-center text-gray-500">
-                    <strong>Penting:</strong> Materi ini hanya untuk tujuan edukasi dan tidak menggantikan nasihat medis profesional. Selalu konsultasikan dengan dokter atau penyedia layanan kesehatan Anda mengenai diagnosis dan penanganan kondisi Anda.
-                </p>
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200 mb-8">
+                    <p class="text-neutral-700 text-lg leading-relaxed text-center">
+                        Informasi yang disajikan di sini didasarkan pada tinjauan sistematis, meta-analisis, dan pedoman praktik klinis terbaru.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <h3 class="text-xl font-semibold mb-6 text-gray-800 flex items-center">
+                        <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-blue-600">📚</span>
+                        </span>
+                        Referensi Ilmiah (Gaya AMA)
+                    </h3>
+                    
+                    <ol class="space-y-6 text-neutral-800">
+                        <li class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm">1</span>
+                            <div class="text-sm leading-relaxed">
+                                Kovacs FM, Garcia-Odalric J, Gesteira C, et al. Management of low back pain in pregnancy: a systematic review and meta-analysis. <i>J Clin Med</i>. 2023;12(4):1345. doi:10.3390/jcm12041345
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm">2</span>
+                            <div class="text-sm leading-relaxed">
+                                Shiri R, Coggon D, Falah-Hassani K. Exercise for the prevention and treatment of low back pain in pregnancy: a systematic review and meta-analysis. <i>Eur J Pain</i>. 2024;28(1):19-32. doi:10.1002/ejp.2163
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm">3</span>
+                            <div class="text-sm leading-relaxed">
+                                Casagrande D, Gugala Z, Clark SM, Lindsey RW. Low back pain and pelvic girdle pain in pregnancy. <i>J Am Acad Orthop Surg</i>. 2023;31(18):921-931. doi:10.5435/JAAOS-D-22-00894
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm">4</span>
+                            <div class="text-sm leading-relaxed">
+                                Li W, Chen Y, Wang H. Efficacy of Kinesio taping for pregnancy-related low back pain: A systematic review and meta-analysis. <i>Int J Nurs Stud</i>. 2024;149:104631. doi:10.1016/j.ijnurstu.2023.104631
+                            </div>
+                        </li>
+                        
+                        <li class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <span class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0 font-bold text-sm">5</span>
+                            <div class="text-sm leading-relaxed">
+                                American College of Obstetricians and Gynecologists. Management of common musculoskeletal complaints during pregnancy. <i>ACOG Clinical Practice Guideline No. 4.</i> 2023;141(5):e481-e490. doi:10.1097/AOG.0000000000005171
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="mt-8 bg-yellow-50 rounded-xl p-6 border border-yellow-300">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="text-yellow-600 text-lg">⚠️</span>
+                        </div>
+                        <div>
+                            <p class="text-yellow-800 font-semibold mb-1">Penting untuk Diingat</p>
+                            <p class="text-yellow-700 text-sm">
+                                Materi ini hanya untuk tujuan edukasi dan tidak menggantikan nasihat medis profesional. Selalu konsultasikan dengan dokter atau penyedia layanan kesehatan Anda mengenai diagnosis dan penanganan kondisi Anda.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </section>
             
             <!-- Bagian Baru Kuis -->
             <section id="kuis" class="content-section">
-                <h2 class="text-2xl font-semibold mb-6 text-teal-700">Kuis Interaktif: Uji Pengetahuan Anda!</h2>
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold mb-4 text-gradient">Kuis Interaktif: Uji Pengetahuan Anda!</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto rounded-full"></div>
+                </div>
                 
-                <div id="quiz-container" class="space-y-6">
+                <div id="quiz-container" class="max-w-4xl mx-auto">
                     <div id="question-container" class="hidden">
-                        <p id="question-text" class="text-lg font-medium text-neutral-800 mb-4"></p>
-                        <div id="answer-options" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <!-- Opsi jawaban akan di-generate oleh JS -->
+                        <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 mb-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-teal-600 font-bold" id="question-number">1</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-500">Pertanyaan</span>
+                                </div>
+                                <div class="text-sm text-gray-500" id="progress-indicator">1 dari 5</div>
+                            </div>
+                            
+                            <p id="question-text" class="text-xl font-semibold text-neutral-800 mb-8 leading-relaxed"></p>
+                            
+                            <div id="answer-options" class="grid grid-cols-1 gap-4 mb-8">
+                                <!-- Opsi jawaban akan di-generate oleh JS -->
+                            </div>
+                            
+                            <div class="text-center">
+                                <button id="next-question-btn" class="hidden btn-primary px-8 py-3 text-lg">
+                                    <span>Pertanyaan Berikutnya</span>
+                                    <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                        <button id="next-question-btn" class="hidden mt-6 inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                            Pertanyaan Berikutnya
-                        </button>
                     </div>
 
-                    <div id="quiz-results" class="hidden text-center space-y-4 p-6 bg-amber-50 rounded-lg">
-                        <h3 class="text-xl font-semibold text-neutral-800">Hasil Kuis Selesai!</h3>
-                        <p id="score-text" class="text-2xl font-bold text-teal-700"></p>
-                        <button id="restart-quiz-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                            Ulangi Kuis
-                        </button>
+                    <div id="quiz-results" class="hidden">
+                        <div class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 rounded-2xl p-8 border border-green-200 shadow-lg text-center">
+                            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-green-800 mb-4">🎉 Kuis Selesai!</h3>
+                            <p id="score-text" class="text-3xl font-bold text-green-700 mb-2"></p>
+                            <p class="text-green-600 mb-8">Terima kasih telah menguji pengetahuan Anda!</p>
+                            <button id="restart-quiz-btn" class="btn-primary px-8 py-3 text-lg">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Ulangi Kuis</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div id="start-quiz-container" class="text-center">
-                        <p class="mb-4 text-neutral-700">Tes pemahaman Anda tentang materi nyeri punggung pada kehamilan.</p>
-                        <button id="start-quiz-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                            Mulai Kuis
-                        </button>
+                        <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl p-8 border border-blue-200 shadow-lg">
+                            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-blue-800 mb-4">🎯 Siap Menguji Pengetahuan Anda?</h3>
+                            <p class="text-blue-700 mb-8 text-lg">Tes pemahaman Anda tentang materi nyeri punggung pada kehamilan dengan 5 pertanyaan interaktif.</p>
+                            <button id="start-quiz-btn" class="btn-primary px-8 py-4 text-lg">
+                                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                </svg>
+                                <span>Mulai Kuis</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
             <!-- Akhir Bagian Baru Kuis -->
             
-            <!-- Bagian Baru Skrining Mandiri -->
-            <section id="skrining" class="content-section">
-                <h2 class="text-2xl font-semibold mb-4 text-teal-700">Skrining Mandiri Faktor Risiko</h2>
-                
-                <div class="disclaimer-box">
-                    <h3 class="font-bold">PENTING: BUKAN DIAGNOSIS MEDIS</h3>
-                    <p class="text-sm">Kuis ini adalah alat bantu edukasi untuk membantu Anda mengidentifikasi faktor risiko umum. Ini <strong>TIDAK</strong> menggantikan diagnosis, skrining, atau nasihat dari dokter, bidan, atau fisioterapis Anda. Gunakan hasil ini sebagai bahan diskusi dengan profesional kesehatan Anda.</p>
-                </div>
-
-                <div id="screening-container">
-                    <p class="mb-4 text-neutral-700">Jawab "Ya" pada pernyataan di bawah ini yang sesuai dengan kondisi Anda.</p>
-                    
-                    <div id="screening-questions" class="space-y-4">
-                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda pernah mengalami nyeri punggung kronis atau signifikan <strong>sebelum</strong> kehamilan ini?</span>
-                            <input type="checkbox" class="screening-checkbox">
-                        </label>
-                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda mengalami nyeri punggung pada kehamilan <strong>sebelumnya</strong>? (Jika ini bukan kehamilan pertama Anda)</span>
-                            <input type="checkbox" class="screening-checkbox">
-                        </label>
-                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                            <span class="text-neutral-800 max-w-[80%]">Apakah Indeks Massa Tubuh (IMT / BMI) Anda berada dalam kategori <i>overweight</i> atau <i>obesitas</i> <strong>sebelum</strong> hamil?</span>
-                            <input type="checkbox" class="screening-checkbox">
-                        </label>
-                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                            <span class="text-neutral-800 max-w-[80%]">Apakah pekerjaan Anda mengharuskan Anda sering membungkuk, mengangkat berat, atau berdiri sangat lama?</span>
-                            <input type="checkbox" class="screening-checkbox">
-                        </label>
-                        <label class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                            <span class="text-neutral-800 max-w-[80%]">Apakah Anda merasa gaya hidup Anda (di luar pekerjaan) cenderung tidak aktif (banyak duduk/sedentari)?</span>
-                            <input type="checkbox" class="screening-checkbox">
-                        </label>
-                    </div>
-
-                    <button id="show-screening-results-btn" class="mt-6 w-full md:w-auto inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                        Lihat Hasil Skrining
-                    </button>
-                </div>
-
-                <div id="screening-results" class="hidden text-center space-y-4 p-6 bg-amber-50 rounded-lg">
-                    <h3 class="text-xl font-semibold text-neutral-800">Hasil Ceklis Anda:</h3>
-                    <p id="screening-score-text" class="text-2xl font-bold text-teal-700"></p>
-                    <p id="screening-advice-text" class="text-neutral-700 max-w-2xl mx-auto"></p>
-                    <p class="font-bold text-neutral-800">Langkah Selanjutnya: Diskusikan poin-poin yang Anda centang dengan dokter atau bidan Anda pada kunjungan berikutnya.</p>
-                    <button id="reset-screening-btn" class="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all">
-                        Ulangi Ceklis
-                    </button>
-                </div>
-            </section>
-            <!-- Akhir Bagian Baru Skrining Mandiri -->
-            
         </main>
 
+        <!-- Footer -->
+        <footer class="mt-16 text-center">
+            <div class="bg-gradient-to-r from-teal-50 to-blue-50 rounded-2xl p-8 border border-teal-200">
+                <div class="max-w-2xl mx-auto">
+                    <h3 class="text-lg font-semibold text-teal-800 mb-2">💝 Terima Kasih Telah Belajar Bersama Kami</h3>
+                    <p class="text-teal-700 text-sm leading-relaxed">
+                        Semoga informasi ini bermanfaat untuk perjalanan kehamilan yang lebih nyaman dan sehat. 
+                        Ingatlah untuk selalu berkonsultasi dengan tenaga kesehatan profesional.
+                    </p>
+                    <div class="mt-4 flex justify-center items-center space-x-2 text-xs text-teal-600">
+                        <span>🏥</span>
+                        <span>Dibuat untuk edukasi kesehatan ibu hamil</span>
+                        <span>💚</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        </div>
     </div>
 
     <script>
@@ -541,8 +1165,11 @@
             const tabNav = document.getElementById('tab-nav');
 
             tabNav.addEventListener('click', function (e) {
-                if (e.target.classList.contains('tab-button')) {
-                    const tabId = e.target.getAttribute('data-tab');
+                // Find the closest tab-button element (handles clicks on span inside button)
+                const tabButton = e.target.closest('.tab-button');
+                
+                if (tabButton) {
+                    const tabId = tabButton.getAttribute('data-tab');
 
                     tabButtons.forEach(btn => {
                         btn.classList.remove('active');
@@ -551,7 +1178,7 @@
                         section.classList.remove('active');
                     });
 
-                    e.target.classList.add('active');
+                    tabButton.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 }
             });
@@ -565,12 +1192,27 @@
                 const content = header.nextElementSibling;
                 const icon = header.querySelector('.accordion-icon');
 
+                // Close all other accordions
+                const allItems = accordionContainer.querySelectorAll('.accordion-item');
+                allItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        const otherContent = otherItem.querySelector('.accordion-content');
+                        const otherIcon = otherItem.querySelector('.accordion-icon');
+                        otherContent.classList.remove('active');
+                        otherIcon.textContent = '+';
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current accordion
                 if (content.classList.contains('active')) {
                     content.classList.remove('active');
                     icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
                 } else {
                     content.classList.add('active');
                     icon.textContent = '−';
+                    icon.style.transform = 'rotate(180deg)';
                 }
             });
 
@@ -671,12 +1313,17 @@
             function showQuestion() {
                 resetState();
                 const question = quizData[currentQuestionIndex];
+                const questionNumber = document.getElementById('question-number');
+                const progressIndicator = document.getElementById('progress-indicator');
+                
+                questionNumber.textContent = currentQuestionIndex + 1;
+                progressIndicator.textContent = `${currentQuestionIndex + 1} dari ${quizData.length}`;
                 questionText.textContent = question.question;
                 
-                question.options.forEach(option => {
+                question.options.forEach((option, index) => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.classList.add('quiz-option');
+                    button.classList.add('quiz-option', 'p-4', 'rounded-lg', 'border-2', 'border-gray-300', 'bg-white', 'text-left', 'font-medium', 'transition-all', 'duration-300', 'hover:border-teal-500', 'hover:bg-teal-50');
                     button.addEventListener('click', () => selectAnswer(option, button));
                     answerOptions.appendChild(button);
                 });
@@ -694,16 +1341,45 @@
                 
                 if (correct) {
                     score++;
-                    buttonElement.classList.add('correct');
+                    buttonElement.classList.remove('border-gray-300', 'bg-white', 'hover:border-teal-500', 'hover:bg-teal-50');
+                    buttonElement.classList.add('border-green-500', 'bg-green-100', 'text-green-800');
+                    buttonElement.innerHTML = `
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            ${selectedOption}
+                        </div>
+                    `;
                 } else {
-                    buttonElement.classList.add('wrong');
+                    buttonElement.classList.remove('border-gray-300', 'bg-white', 'hover:border-teal-500', 'hover:bg-teal-50');
+                    buttonElement.classList.add('border-red-500', 'bg-red-100', 'text-red-800');
+                    buttonElement.innerHTML = `
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            ${selectedOption}
+                        </div>
+                    `;
                 }
 
+                // Highlight correct answer
                 Array.from(answerOptions.children).forEach(button => {
-                    if (button.textContent === quizData[currentQuestionIndex].correctAnswer) {
-                        button.classList.add('correct');
+                    if (button.textContent.includes(quizData[currentQuestionIndex].correctAnswer) && !correct) {
+                        button.classList.remove('border-gray-300', 'bg-white', 'hover:border-teal-500', 'hover:bg-teal-50');
+                        button.classList.add('border-green-500', 'bg-green-100', 'text-green-800');
+                        button.innerHTML = `
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                ${quizData[currentQuestionIndex].correctAnswer}
+                            </div>
+                        `;
                     }
                     button.disabled = true;
+                    button.classList.add('cursor-not-allowed');
                 });
 
                 nextQuestionBtn.classList.remove('hidden');
@@ -734,57 +1410,9 @@
             restartQuizBtn.addEventListener('click', restartQuiz);
             // Akhir Logika Kuis
 
-            // Logika Skrining Mandiri Baru
-            const screeningContainer = document.getElementById('screening-container');
-            const screeningQuestions = document.getElementById('screening-questions');
-            const showScreeningResultsBtn = document.getElementById('show-screening-results-btn');
-            const screeningResults = document.getElementById('screening-results');
-            const screeningScoreText = document.getElementById('screening-score-text');
-            const screeningAdviceText = document.getElementById('screening-advice-text');
-            const resetScreeningBtn = document.getElementById('reset-screening-btn');
-            const screeningCheckboxes = screeningQuestions.querySelectorAll('.screening-checkbox');
-
-            function showScreeningResults() {
-                let score = 0;
-                screeningCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        score++;
-                    }
-                });
-
-                const total = screeningCheckboxes.length;
-                screeningScoreText.textContent = `Anda memiliki ${score} dari ${total} faktor risiko umum.`;
-
-                let advice = "";
-                if (score === 0) {
-                    advice = "Ini adalah awal yang baik! Meskipun Anda tidak memiliki faktor risiko umum ini, tetap penting untuk menjaga postur tubuh yang baik dan tetap aktif secara aman selama kehamilan.";
-                } else if (score <= 2) {
-                    advice = "Anda memiliki beberapa faktor risiko umum. Ini adalah poin-poin yang sangat baik untuk didiskusikan dengan dokter Anda untuk merencanakan strategi pencegahan, seperti latihan yang tepat atau penyesuaian postur.";
-                } else {
-                    advice = "Anda memiliki beberapa faktor yang diketahui dapat berkontribusi pada nyeri punggung. Sangat disarankan untuk berbicara secara proaktif dengan dokter atau fisioterapis Anda. Mereka dapat memberi Anda strategi pencegahan dan penanganan yang disesuaikan untuk Anda.";
-                }
-                screeningAdviceText.textContent = advice;
-                
-                screeningContainer.classList.add('hidden');
-                screeningResults.classList.remove('hidden');
-            }
-
-            function resetScreening() {
-                screeningResults.classList.add('hidden');
-                screeningContainer.classList.remove('hidden');
-                screeningCheckboxes.forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-            }
-
-            showScreeningResultsBtn.addEventListener('click', showScreeningResults);
-            resetScreeningBtn.addEventListener('click', resetScreening);
-            // Akhir Logika Skrining Mandiri
-
         });
     </script>
 
 </body>
 </html>
-
 
